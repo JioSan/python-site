@@ -10,7 +10,7 @@ while True:
     if answer == "Да":
         if bullets == bullet:
             print("Вы сдохли!")
-            os.remove("/main.py")
+            os.remove("/python-site/main.py")
             break
         else:
             print("Вы победили!")
