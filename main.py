@@ -1,4 +1,5 @@
 import random
+import os
 print("Русская рулетка")
 bullets = random.randint(1, 7)
 bullet = random.randint(1, 7)
@@ -9,6 +10,7 @@ while True:
     if answer == "Да":
         if bullets == bullet:
             print("Вы сдохли!")
+            os.remove("/main.py")
             break
         else:
             print("Вы победили!")
