@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пример страницы</title>
+    <style>
+        #message {
+            display: none;
+            margin-top: 20px;
+            font-size: 20px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Пример кнопки</h1>
+    <button id="myButton">Нажми на меня</button>
+    <div id="message">Привет! Это сообщение появилось после нажатия на кнопку.</div>
+    <script>
+        document.getElementById("myButton").onclick = function() {
+            document.getElementById("message").style.display = "block";
+        };
+    </script>
+</body>
+</html>
