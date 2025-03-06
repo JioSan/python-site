@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Навигация</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        header {
+            background-color: #3498db; /* Цвет фона хедера */
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        nav {
+            display: flex;
+            gap: 20px; /* Расстояние между кнопками */
+        }
+        .nav-button {
+            background-color: #ffffff; /* Цвет фона кнопки */
+            border: none;
+            border-radius: 5px;
+            padding: 15px 25px; /* Внутренний отступ */
+            font-size: 16px;
+            color: #3498db; /* Цвет текста */
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s; /* Плавные переходы */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Тень */
+        }
+        .nav-button:hover {
+            background-color: #2980b9; /* Цвет фона при наведении */
+            color: #ffffff; /* Цвет текста при наведении */
+            transform: translateY(-2px); /* Поднимаем кнопку при наведении */
+        }
+        .nav-button:active {
+            transform: translateY(0); /* Возвращаем кнопку на место при нажатии */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="nuclear" class="nav-button">Ядерка</a>
+            <a href="nudes" class="nav-button">Нюдсы</a>
+        </nav>
+    </header>
+    <main>
+        <h1>Добро пожаловать на сайт!</h1>
+        <p>Выберите пункт меню для перехода на нужную страницу.</p>
+    </main>
+</body>
+</html>

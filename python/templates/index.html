@@ -3,24 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Пример страницы</title>
+    <title>Таймер обратного отсчета</title>
     <style>
-        #message {
-            display: none;
-            margin-top: 20px;
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        #countdown {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        #currentTime {
             font-size: 20px;
-            color: green;
+            margin-bottom: 20px; /* Добавляем отступ снизу для текста */
+        }
+        .nav-button {
+            background-color: #ffffff; /* Цвет фона кнопки */
+            border: none;
+            border-radius: 5px;
+            padding: 20px 25px; /* Внутренний отступ */
+            font-size: 16px;
+            color: #3498db; /* Цвет текста */
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s; /* Плавные переходы */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Тень */
+            margin-top: 20px; /* Отступ сверху для кнопки */
+        }
+        .nav-button:hover {
+            background-color: #2980b9; /* Цвет фона при наведении */
+            color: #ffffff; /* Цвет текста при наведении */
+            transform: translateY(-2px); /* Поднимаем кнопку при наведении */
+        }
+        .nav-button:active {
+            transform: translateY(0); /* Возвращаем кнопку на место при нажатии */
+        }
+        #mathProblem {
+            margin: 20px 0; /* Отступы сверху и снизу */
+        }
+        #answerContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #explosionMessage {
+            font-size: 24px;
+            color: red; /* Цвет текста "Взрыв!!!" */
+            margin-top: 20px; /* Отступ сверху для сообщения о взрыве */
+            display: none; /* Скрываем сообщение по умолчанию */
         }
     </style>
 </head>
 <body>
-    <h1>Пример кнопки</h1>
-    <button id="myButton">Нажми на меня</button>
-    <div id="message">Привет! Это сообщение появилось после нажатия на кнопку.</div>
+    <h1>Таймер обратного отсчета до ядерки</h1>
+    <div id="countdown">00:00:00.000</div>
+    <div id="currentTime">Текущее время: </div>
+    <div id="mathProblem"></div>
+    <div id="answerContainer">
+        <input type="number" id="answer" placeholder="Ваш ответ" />
+        <button class="nav-button" id="submitAnswer">Готово</button>
+    </div>
+    <div id="backButtonContainer" style="display: none;">
+        <button class="nav-button" id="backButton">Назад</button>
+    </div>
+    <div id="refreshButtonContainer" style="display: none;">
+        <button class="nav-button" id="refreshButton">Обновить</button>
+    </div>
+    <div id="explosionMessage">Взрыв!!!</div>
     <script>
-        document.getElementById("myButton").onclick = function() {
-            document.getElementById("message").style.display = "block";
+        let countdownInterval;
+        let currentAnswer;
+        let currentOperation;
+
+        function generateMathProblem() {
+            const num1 = Math.floor(Math.random() * 10) + 1;
+            const num2 = Math.floor(Math.random() * 10) + 1;
+            const operation = Math.floor(Math.random() * 6);
+
+            switch (operation) {
+                case 0: // Сложение
+                    currentOperation = 'addition';
+                    currentAnswer = num1 + num2;
+                    document.getElementById("mathProblem").innerText = `Сколько будет ${num1} + ${num2}?`;
+                    break;
+                case 1: // Вычитание
+                    currentOperation = 'subtraction';
+                    currentAnswer = num1 - num2;
+                    document.getElementById("mathProblem").innerText = `Сколько будет ${num1} - ${num2}?`;
+                    break;
+                case 2: // Умножение
+                    currentOperation = 'multiplication';
+                    currentAnswer = num1 * num2;
+                    document.getElementById("mathProblem").innerText = `Сколько будет ${num1} * ${num2}?`;
+                    break;
+                case 3: // Деление
+                    currentOperation = 'division';
+                    currentAnswer = num1 / num2;
+                    currentAnswer = Math.round(currentAnswer * 100) / 100;
+                    document.getElementById("mathProblem").innerText = `Сколько будет ${num1} / ${num2}? (Округлите до двух знаков)`;
+                    break;
+                case 4: // Квадрат
+                    currentOperation = 'square';
+                    currentAnswer = num1 * num1;
+                    document.getElementById("mathProblem").innerText = `Сколько будет ${num1} в квадрате?`;
+                    break;
+                case 5: // Куб
+                    currentOperation = 'cube';
+                    currentAnswer = num1 * num1 * num1;
+                    document.getElementById("mathProblem").innerText = `Сколько будет ${num1} в кубе?`;
+                    break;
+            }
+        }
+
+        const countdownDate = new Date(Date.now() + 60 * 1000);
+
+        countdownInterval = setInterval(() => {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            const milliseconds = Math.floor(distance % 1000);
+
+            document.getElementById("countdown").innerHTML = 
+                `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}.${String(milliseconds).padStart(3, '0')}`;
+
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                document.getElementById("countdown").innerHTML = "00:00:00.000";
+                document.getElementById("answerContainer").style.display = "none";
+                document.getElementById("explosionMessage").style.display = "block";
+                document.getElementById("refreshButtonContainer").style.display = "block";
+                document.getElementById("backButtonContainer").style.display = "none";
+            }
+        }, 10);
+
+        document.getElementById("submitAnswer").onclick = function() {
+            const userAnswer = parseFloat(document.getElementById("answer").value);
+            let checkedAnswer = userAnswer;
+            
+            if (currentOperation === 'division') {
+                checkedAnswer = Math.round(userAnswer * 100) / 100;
+            }
+
+            if (checkedAnswer === currentAnswer) {
+                clearInterval(countdownInterval);
+                document.getElementById("countdown").innerHTML = "Таймер остановлен!";
+                document.getElementById("answerContainer").style.display = "none";
+                document.getElementById("backButtonContainer").style.display = "block";
+                document.getElementById("refreshButtonContainer").style.display = "block";
+                document.getElementById("explosionMessage").style.display = "none";
+            } else {
+                clearInterval(countdownInterval);
+                document.getElementById("countdown").innerHTML = "00:00:00.000";
+                document.getElementById("answerContainer").style.display = "none";
+                document.getElementById("explosionMessage").style.display = "block";
+                document.getElementById("refreshButtonContainer").style.display = "block";
+                document.getElementById("backButtonContainer").style.display = "none";
+            }
         };
+        // Обработчик нажатия кнопки "Назад"
+        document.getElementById("backButton").onclick = function() {
+            window.location.href = "/"; // Замените на URL вашего меню
+        };
+        // Обработчик нажатия кнопки "Обновить"
+        document.getElementById("refreshButton").onclick = function() {
+            location.reload(); // Обновляем страницу
+        };
+        // Обработчик нажатия клавиши Enter
+        document.getElementById("answer").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                document.getElementById("submitAnswer").click(); // Вызываем нажатие кнопки "Готово"
+            }
+        });
+        // Генерируем первую математическую задачу
+        generateMathProblem();
     </script>
 </body>
 </html>

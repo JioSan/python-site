@@ -1,14 +1,100 @@
 <!DOCTYPE html>
 <html lang="ru">
-    
-  <head>
-   <meta charset="UTF-8">
-   <title>Hello Page</title>
-  </head>
-  
-  <body>
-    <h1>Привет, {{ name }}!</h1>
-    <p>Welcome to our simple Flask app.</p>
-  </body>
-  
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Нюдсы</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .loader {
+            border: 16px solid #f3f3f3; /* Светло-серый */
+            border-top: 16px solid #3498db; /* Синий */
+            border-radius: 50%;
+            width: 100px; /* Размер круга */
+            height: 100px; /* Размер круга */
+            animation: spin 2s linear infinite; /* Анимация вращения */
+            margin-bottom: 20px; /* Отступ снизу */
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .progress-container {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            height: 20px; /* Высота полосы прогресса */
+            position: relative;
+        }
+        .progress-bar {
+            height: 100%;
+            width: 0%; /* Начальное значение прогресса */
+            background-color: #3498db; /* Цвет полосы прогресса */
+            transition: width 0.1s ease; /* Плавный переход при изменении ширины */
+        }
+        .loading-text {
+            font-size: 18px;
+            margin-top: 10px; /* Отступ сверху */
+            animation: dots 1.5s infinite; /* Анимация точек */
+        }
+        @keyframes dots {
+            0%, 20% { content: "Загрузка."; }
+            40% { content: "Загрузка.."; }
+            60% { content: "Загрузка..."; }
+            100% { content: "Загрузка."; }
+        }
+        .percentage {
+            font-size: 18px;
+            margin-top: 10px; /* Отступ сверху */
+            transition: color 0.5s ease; /* Плавный переход цвета */
+        }
+    </style>
+</head>
+<body>
+    <div class="loader"></div>
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <div class="loading-text" id="loadingText">Загрузка.</div>
+    <div class="percentage" id="percentageText">0%</div>
+    <script>
+        let progress = 0; // Начальное значение прогресса
+        const progressBar = document.getElementById('progressBar');
+        const loadingText = document.getElementById('loadingText');
+        const percentageText = document.getElementById('percentageText');
+        // Функция для обновления прогресса
+        function updateProgress() {
+            if (progress < 99) { // Условие для достижения 99%
+                // Увеличиваем прогресс на случайное значение от 0 до 5, но замедляем его после 50%
+                const increment = (progress < 50) ? Math.random() * 5 : Math.random() * 2; // Уменьшаем скорость после 50%
+                progress += increment; 
+                if (progress > 99) progress = 99; // Ограничиваем значение до 99%
+                progressBar.style.width = progress + '%'; // Обновляем ширину полосы прогресса
+                
+                // Обновляем текст с процентами
+                percentageText.textContent = Math.floor(progress) + '%'; // Отображаем целое число процентов
+                // Меняем цвет текста процентов в зависимости от прогресса
+                const colorValue = Math.floor((progress / 99) * 255); // Рассчитываем значение цвета
+                percentageText.style.color = `rgb(0, 0, ${colorValue})`; // Устанавливаем синий цвет
+            }
+        }
+        // Обновляем прогресс каждые 100 миллисекунд
+        setInterval(updateProgress, 100);
+        // Анимация текста загрузки
+        let dotCount = 0;
+        setInterval(() => {
+            dotCount = (dotCount + 1) % 4; // Меняем количество точек от 0 до 3
+            loadingText.textContent = "Загрузка" + ".".repeat(dotCount); // Обновляем текст
+        }, 500); // Каждые 500 миллисекунд
+    </script>
+</body>
 </html>

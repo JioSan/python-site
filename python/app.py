@@ -8,12 +8,16 @@ def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),'favicon.ico',mimetype='image/vnd.microsoft.icon')
 
 @app.route('/')
+def menu():
+    return render_template('menu.html')
+
+@app.route('/nuclear')
 def home():
     return render_template('index.html')
 
-@app.route('/menu')
-def menu():
-    return 'Это меню'
+@app.route('/nudes')
+def nudes():
+    return render_template('base.html')
 
 @app.route('/user/<username>')
 def show_user_profile(username):
@@ -28,7 +32,7 @@ if __name__ == '__main__': #для запуска
 
 
 
-
+#Пососи
 
 
 
