@@ -9,11 +9,11 @@ while True:
     answer = input()
     if answer == "Да":
         if bullets == bullet:
-            print("Вы сдохли!")
-            os.remove("//main.py")
+            print("")
             break
         else:
             print("Вы победили!")
             break
     else:
         break
+#https://prod.liveshare.vsengsaas.visualstudio.com/join?0B5E853D5291899D4C10B834F53D763F7EA0
