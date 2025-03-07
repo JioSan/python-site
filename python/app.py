@@ -32,7 +32,6 @@ if __name__ == '__main__': #для запуска
 
 
 
-#Пососи
 
 
 
@@ -65,5 +64,4 @@ if __name__ == '__main__': #для запуска
 
 
 
-
-#https://prod.liveshare.vsengsaas.visualstudio.com/join?7E47BCA9C3A218D4414B7956B62977FA7503
+#https://prod.liveshare.vsengsaas.visualstudio.com/join?F45AAED89D681A957C88A4C6304F6BBB9465
