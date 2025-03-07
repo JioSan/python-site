@@ -27,7 +27,7 @@ if __name__ == '__main__': #для запуска
     app.run(debug=True)
 
 
-
+#fdfsfgsgs
 
 
 
