@@ -63,5 +63,4 @@ if __name__ == '__main__': #для запуска
 
 
 
-
 #https://prod.liveshare.vsengsaas.visualstudio.com/join?F45AAED89D681A957C88A4C6304F6BBB9465
